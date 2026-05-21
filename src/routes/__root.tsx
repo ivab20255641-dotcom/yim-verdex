@@ -119,10 +119,24 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
 
   return (
     <QueryClientProvider client={queryClient}>
+      <AuthSync router={router} />
       <Outlet />
     </QueryClientProvider>
   );
+}
+
+function AuthSync({ router }: { router: ReturnType<typeof useRouter> }) {
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
+      router.invalidate();
+      queryClient.invalidateQueries();
+    });
+    return () => subscription.unsubscribe();
+  }, [router, queryClient]);
+  return null;
 }
