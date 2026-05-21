@@ -9,87 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ScanRouteImport } from './routes/scan'
-import { Route as IdentifyRouteImport } from './routes/identify'
-import { Route as IndexRouteImport } from './routes/index'
 
-const ScanRoute = ScanRouteImport.update({
-  id: '/scan',
-  path: '/scan',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IdentifyRoute = IdentifyRouteImport.update({
-  id: '/identify',
-  path: '/identify',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-
-export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/identify': typeof IdentifyRoute
-  '/scan': typeof ScanRoute
-}
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/identify': typeof IdentifyRoute
-  '/scan': typeof ScanRoute
-}
+export interface FileRoutesByFullPath {}
+export interface FileRoutesByTo {}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/identify': typeof IdentifyRoute
-  '/scan': typeof ScanRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/identify' | '/scan'
+  fullPaths: never
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/identify' | '/scan'
-  id: '__root__' | '/' | '/identify' | '/scan'
+  to: never
+  id: '__root__'
   fileRoutesById: FileRoutesById
 }
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  IdentifyRoute: typeof IdentifyRoute
-  ScanRoute: typeof ScanRoute
-}
+export interface RootRouteChildren {}
 
 declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/scan': {
-      id: '/scan'
-      path: '/scan'
-      fullPath: '/scan'
-      preLoaderRoute: typeof ScanRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/identify': {
-      id: '/identify'
-      path: '/identify'
-      fullPath: '/identify'
-      preLoaderRoute: typeof IdentifyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-  }
+  interface FileRoutesByPath {}
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  IdentifyRoute: IdentifyRoute,
-  ScanRoute: ScanRoute,
-}
+const rootRouteChildren: RootRouteChildren = {}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
