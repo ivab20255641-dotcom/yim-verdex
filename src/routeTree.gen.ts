@@ -9,97 +9,208 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ScanRouteImport } from './routes/scan'
-import { Route as IdentifyRouteImport } from './routes/identify'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedScanRouteImport } from './routes/_authenticated/scan'
+import { Route as AuthenticatedIdentifyRouteImport } from './routes/_authenticated/identify'
+import { Route as AuthenticatedGardenRouteImport } from './routes/_authenticated/garden'
+import { Route as AuthenticatedEncyclopediaRouteImport } from './routes/_authenticated/encyclopedia'
+import { Route as AuthenticatedDiagnoseRouteImport } from './routes/_authenticated/diagnose'
 
-const ScanRoute = ScanRouteImport.update({
-  id: '/scan',
-  path: '/scan',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IdentifyRoute = IdentifyRouteImport.update({
-  id: '/identify',
-  path: '/identify',
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedScanRoute = AuthenticatedScanRouteImport.update({
+  id: '/scan',
+  path: '/scan',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedIdentifyRoute = AuthenticatedIdentifyRouteImport.update({
+  id: '/identify',
+  path: '/identify',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedGardenRoute = AuthenticatedGardenRouteImport.update({
+  id: '/garden',
+  path: '/garden',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedEncyclopediaRoute =
+  AuthenticatedEncyclopediaRouteImport.update({
+    id: '/encyclopedia',
+    path: '/encyclopedia',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedDiagnoseRoute = AuthenticatedDiagnoseRouteImport.update({
+  id: '/diagnose',
+  path: '/diagnose',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/identify': typeof IdentifyRoute
-  '/scan': typeof ScanRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/login': typeof LoginRoute
+  '/diagnose': typeof AuthenticatedDiagnoseRoute
+  '/encyclopedia': typeof AuthenticatedEncyclopediaRoute
+  '/garden': typeof AuthenticatedGardenRoute
+  '/identify': typeof AuthenticatedIdentifyRoute
+  '/scan': typeof AuthenticatedScanRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/identify': typeof IdentifyRoute
-  '/scan': typeof ScanRoute
+  '/login': typeof LoginRoute
+  '/diagnose': typeof AuthenticatedDiagnoseRoute
+  '/encyclopedia': typeof AuthenticatedEncyclopediaRoute
+  '/garden': typeof AuthenticatedGardenRoute
+  '/identify': typeof AuthenticatedIdentifyRoute
+  '/scan': typeof AuthenticatedScanRoute
+  '/': typeof AuthenticatedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/identify': typeof IdentifyRoute
-  '/scan': typeof ScanRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/_authenticated/diagnose': typeof AuthenticatedDiagnoseRoute
+  '/_authenticated/encyclopedia': typeof AuthenticatedEncyclopediaRoute
+  '/_authenticated/garden': typeof AuthenticatedGardenRoute
+  '/_authenticated/identify': typeof AuthenticatedIdentifyRoute
+  '/_authenticated/scan': typeof AuthenticatedScanRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/identify' | '/scan'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/diagnose'
+    | '/encyclopedia'
+    | '/garden'
+    | '/identify'
+    | '/scan'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/identify' | '/scan'
-  id: '__root__' | '/' | '/identify' | '/scan'
+  to:
+    | '/login'
+    | '/diagnose'
+    | '/encyclopedia'
+    | '/garden'
+    | '/identify'
+    | '/scan'
+    | '/'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/login'
+    | '/_authenticated/diagnose'
+    | '/_authenticated/encyclopedia'
+    | '/_authenticated/garden'
+    | '/_authenticated/identify'
+    | '/_authenticated/scan'
+    | '/_authenticated/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  IdentifyRoute: typeof IdentifyRoute
-  ScanRoute: typeof ScanRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/scan': {
-      id: '/scan'
-      path: '/scan'
-      fullPath: '/scan'
-      preLoaderRoute: typeof ScanRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/identify': {
-      id: '/identify'
-      path: '/identify'
-      fullPath: '/identify'
-      preLoaderRoute: typeof IdentifyRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/scan': {
+      id: '/_authenticated/scan'
+      path: '/scan'
+      fullPath: '/scan'
+      preLoaderRoute: typeof AuthenticatedScanRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/identify': {
+      id: '/_authenticated/identify'
+      path: '/identify'
+      fullPath: '/identify'
+      preLoaderRoute: typeof AuthenticatedIdentifyRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/garden': {
+      id: '/_authenticated/garden'
+      path: '/garden'
+      fullPath: '/garden'
+      preLoaderRoute: typeof AuthenticatedGardenRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/encyclopedia': {
+      id: '/_authenticated/encyclopedia'
+      path: '/encyclopedia'
+      fullPath: '/encyclopedia'
+      preLoaderRoute: typeof AuthenticatedEncyclopediaRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/diagnose': {
+      id: '/_authenticated/diagnose'
+      path: '/diagnose'
+      fullPath: '/diagnose'
+      preLoaderRoute: typeof AuthenticatedDiagnoseRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedDiagnoseRoute: typeof AuthenticatedDiagnoseRoute
+  AuthenticatedEncyclopediaRoute: typeof AuthenticatedEncyclopediaRoute
+  AuthenticatedGardenRoute: typeof AuthenticatedGardenRoute
+  AuthenticatedIdentifyRoute: typeof AuthenticatedIdentifyRoute
+  AuthenticatedScanRoute: typeof AuthenticatedScanRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedDiagnoseRoute: AuthenticatedDiagnoseRoute,
+  AuthenticatedEncyclopediaRoute: AuthenticatedEncyclopediaRoute,
+  AuthenticatedGardenRoute: AuthenticatedGardenRoute,
+  AuthenticatedIdentifyRoute: AuthenticatedIdentifyRoute,
+  AuthenticatedScanRoute: AuthenticatedScanRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  IdentifyRoute: IdentifyRoute,
-  ScanRoute: ScanRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

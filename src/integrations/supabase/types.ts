@@ -14,7 +14,96 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      plants: {
+        Row: {
+          care: Json | null
+          common_name: string
+          created_at: string
+          description: string | null
+          family: string | null
+          health_status: string | null
+          id: string
+          image_url: string | null
+          last_watered_at: string | null
+          latitude: number | null
+          location_label: string | null
+          longitude: number | null
+          next_water_at: string | null
+          notes: string | null
+          scientific_name: string | null
+          updated_at: string
+          user_id: string
+          water_every_days: number | null
+        }
+        Insert: {
+          care?: Json | null
+          common_name: string
+          created_at?: string
+          description?: string | null
+          family?: string | null
+          health_status?: string | null
+          id?: string
+          image_url?: string | null
+          last_watered_at?: string | null
+          latitude?: number | null
+          location_label?: string | null
+          longitude?: number | null
+          next_water_at?: string | null
+          notes?: string | null
+          scientific_name?: string | null
+          updated_at?: string
+          user_id: string
+          water_every_days?: number | null
+        }
+        Update: {
+          care?: Json | null
+          common_name?: string
+          created_at?: string
+          description?: string | null
+          family?: string | null
+          health_status?: string | null
+          id?: string
+          image_url?: string | null
+          last_watered_at?: string | null
+          latitude?: number | null
+          location_label?: string | null
+          longitude?: number | null
+          next_water_at?: string | null
+          notes?: string | null
+          scientific_name?: string | null
+          updated_at?: string
+          user_id?: string
+          water_every_days?: number | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
