@@ -1,16 +1,18 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Leaf, QrCode, Home, Sprout, BookOpen } from "lucide-react";
+import { Leaf, QrCode, Home, Sprout, BookOpen, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+
+type Tab = { to: "/" | "/scan" | "/identify" | "/garden" | "/encyclopedia"; label: string; icon: LucideIcon; primary?: boolean };
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
-  const tabs = [
+  const tabs: Tab[] = [
     { to: "/", label: "Inicio", icon: Home },
     { to: "/scan", label: "QR", icon: QrCode },
     { to: "/identify", label: "Identificar", icon: Leaf, primary: true },
     { to: "/garden", label: "Jardín", icon: Sprout },
     { to: "/encyclopedia", label: "Saber", icon: BookOpen },
-  ] as const;
+  ];
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col">
